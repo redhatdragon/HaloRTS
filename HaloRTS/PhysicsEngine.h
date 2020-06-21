@@ -113,14 +113,14 @@ public:
 	}
 };
 
-struct PhysicsEngine {
+class PhysicsEngine {
 	static constexpr uint32_t max_bodies = 100000;
 	static constexpr uint32_t unit_size = 1000;  //used as a pretend "1" normalized value to emulate decimal
 	FlatFlaggedBuffer<BodyAABB, max_bodies> bodies = FlatFlaggedBuffer<BodyAABB, max_bodies>();
+	FlatBuffer<void*, max_bodies> userData;
 	FlatBuffer<FlatBuffer<BodyID, 100>, max_bodies> overlappingBodyIDs;
 	SpatialHashTable<300, 300, 128*unit_size> spatialHashTable;
-
-
+public:
 	BodyID addBody(int32_t x, int32_t y, int32_t w, int32_t h) {
 		x *= unit_size; y *= unit_size;
 		w *= unit_size; h *= unit_size;
@@ -131,11 +131,22 @@ struct PhysicsEngine {
 		return retValue;
 	}
 
+	void* getUserData(BodyID id) {
+		return userData[id.id];
+	}
+	void setUserData(BodyID id, void* data) {
+		userData[id.id] = data;
+	}
+
+	FlatBuffer<BodyID, 100>& getOverlappingBodies(BodyID id) {
+		return overlappingBodyIDs[id.id];
+	}
+
 	void addVelocity(BodyID id, float vx, float vy) {
 		BodyAABB* body = &bodies[id.id];
 		body->vel.x += vx * unit_size;
 		body->vel.y += vy * unit_size;
-	};
+	}
 	void setVelocity(BodyID id, float vx, float vy) {
 		BodyAABB* body = &bodies[id.id];
 		body->vel.x = vx * unit_size;
@@ -206,40 +217,6 @@ struct PhysicsEngine {
 			if (validBodyCount >= bodyCount) break;
 		}
 	}
-
-	/*inline void detect() {
-		uint32_t bodyCount = bodies.getCount();
-		uint32_t validBodyCount = 0;
-		for (uint32_t i = 0; true; i++) {
-			if (bodies.getIsValid(i) == false)
-				continue;
-			validBodyCount++;
-			
-			overlappingBodyIDs[i].count = 0;
-			uint32_t innerValidBodyCount = 0;
-			for (uint32_t j = i + 1; true; j++) {
-				if (bodies[i].collidesWith(bodies[j])) {
-					bodies[i].reverseSimulate();
-					bodies[j].reverseSimulate();
-				}
-				if (innerValidBodyCount >= bodyCount) break;
-				innerValidBodyCount++;
-			}
-
-			if (validBodyCount >= bodyCount-1) break;
-		}
-	}
-	inline void resolve() {
-		uint32_t bodyCount = bodies.getCount();
-		uint32_t validBodyCount = 0;
-		for (uint32_t i = 0; true; i++) {
-			if (bodies.getIsValid(i) == false)
-				continue;
-			validBodyCount++;
-			//
-			if (validBodyCount >= bodyCount) break;
-		}
-	}*/
 
 	void tick() {
 		simulate();

@@ -5,8 +5,7 @@ void systemRendering() {
 	for (auto& entity : view) {
 		BodyID bodyID = view.get<BodyID>(entity);
 		TextureID textureID = view.get<TextureID>(entity);
-		Vec2D<int32_t> pos;
-		pos = physics.getPos<int32_t>(bodyID);
+		Vec2D<int32_t> pos = physics.getPos<int32_t>(bodyID);
 		const Vec2D<int32_t> siz = physics.getSize<int32_t>(bodyID);
 		const void* texture = TextureCodex::get(textureID);
 		constexpr int32_t winWidth = 1024, winHeight = 768;
@@ -32,6 +31,7 @@ void systemPlayerLogic() {
 		if (getKeyState('d'))
 			rightVel += speed;
 		physics.setVelocity(bodyID, rightVel, downVel);
+
 	}
 }
 
