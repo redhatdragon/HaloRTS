@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="Asset.h" />
     <ClInclude Include="FlatBuffer.h" />
+    <ClInclude Include="include\SS.h" />
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="PhysicsEngineConvex.h" />
     <ClInclude Include="systems.h" />

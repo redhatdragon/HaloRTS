@@ -6,6 +6,7 @@ struct PlayerController {};  //Need to move this somewhere else.
 #include "Asset.h"
 #include <Entt.h>
 #include <iostream>
+#include "SS.h"
 
 entt::registry reg;
 static constexpr uint32_t max_entities = 100000;
@@ -27,9 +28,9 @@ void appStart() {
 		entities[entityCount] = entity;
 		entityCount++;
 		BodyID bodyID = physics.addBodyRect(i * 64 + 16, 50, 64, 64);
+		physics.setUserData(bodyID, (void*)entity);  // Casting our entity id to a void*, works on 32 bit+ address spaces.
 		reg.emplace<BodyID>(entity, bodyID);
 		reg.emplace<TextureID>(entity, TextureCodex::add("data/Koishi.png"));
-		physics.setUserData(bodyID, (void*)entity);  // Casting our entity id to a void*, works on 32 bit+ address spaces.
 	}
 	{
 		auto entity = reg.create();

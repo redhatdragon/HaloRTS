@@ -41,5 +41,8 @@
     <ClInclude Include="PhysicsEngineConvex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\SS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
