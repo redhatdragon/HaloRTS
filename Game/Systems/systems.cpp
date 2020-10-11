@@ -11,6 +11,7 @@ ComponentID damageOnCollisionComponentID;
 ComponentID healthComponentID;
 ComponentID deadComponentID;
 ComponentID suicideOnCollisionComponentID;
+ComponentID AIComponentID;
 
 void registerComponents() {
 	bodyComponentID = ecs.registerComponent("body", sizeof(BodyID));

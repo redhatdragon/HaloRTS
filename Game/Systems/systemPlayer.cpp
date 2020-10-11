@@ -44,7 +44,7 @@ void systemPlayer() {
 			auto velocity = direction * 17;
 
 			EntityID bullet = ecs.getNewEntity();
-			TextureID textureID = TextureCodex::add("data/textures/Bullet.png");
+			TextureID textureID = TextureCodex::add(std::string(getDirData()) + "textures/Bullet.png");
 			ecs.emplace(bullet, textureComponentID, &textureID);
 			BodyID bodyID = physics.addBodyRect(spawnPos.x, spawnPos.y, 8, 8);
 			physics.setVelocity(bodyID, velocity.x, velocity.y);

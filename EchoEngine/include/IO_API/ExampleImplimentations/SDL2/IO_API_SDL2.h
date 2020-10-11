@@ -21,6 +21,12 @@
 #include <stdio.h>
 #include <Windows.h>
 
+#ifdef DIR_TO_DATA 
+#error "DIR_TO_DATA already defined"
+#else
+#define DIR_TO_DATA "../data/"
+#endif
+
 struct SDL_Window *window;
 struct SDL_Renderer *renderer;
 const Uint8* keys;
@@ -32,6 +38,9 @@ void drawTexture(const void* texture, int x, int y, int w, int h) {
 	struct SDL_Rect r = { x, y, w, h };
 	SDL_RenderCopy(renderer, t, NULL, &r);
 }
+void recolorTexture(void* texture, uint8_t r, uint8_t g, uint8_t b) {
+	SDL_SetTextureColorMod((SDL_Texture*)texture, r, g, b);
+}
 void* getTexture(const char* fileName) {
 	//struct *t = IMG_LoadTexture(renderer, fileName);  //This should be more optimized but fails in debug mode with magic number issue.
 	struct SDL_Surface* s = IMG_Load(fileName);
@@ -41,7 +50,7 @@ void releaseTexture(void* texture) {
 	SDL_DestroyTexture(texture);
 }
 void drawText(const char* str, int x, int y, unsigned int fontWidth) {
-	TTF_Font* font = TTF_OpenFont("data/fonts/consola.ttf", fontWidth);
+	TTF_Font* font = TTF_OpenFont(DIR_TO_DATA "fonts/consola.ttf", fontWidth);
 	if (font == NULL)
 		printf("Error: Can't load font arial.ttf.\n");
 
@@ -58,6 +67,18 @@ void drawText(const char* str, int x, int y, unsigned int fontWidth) {
 	SDL_FreeSurface(surface);
 
 	TTF_CloseFont(font);
+}
+void drawRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+	//SDL_Color color = { 255, 255, 255 };
+	//SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, w, y);
+	struct SDL_Rect rect = { x, y, w, h };
+	//SDL_RenderCopy(renderer, texture, NULL, &rect);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	SDL_RenderFillRect(renderer, &rect);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+
+	//SDL_DestroyTexture(texture);
 }
 
 bool getKeyState(char k) {
@@ -87,6 +108,10 @@ void getMouseCanvasPos(int* x, int* y) {
 
 void getCanvasSize(unsigned int* width, unsigned int* height) {
 	*width = 1024; *height = 768;
+}
+
+const char* getDirData() {
+	return DIR_TO_DATA;
 }
 
 float getFPS() {

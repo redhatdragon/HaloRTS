@@ -32,6 +32,7 @@ public:
 	static Data* create(void* from, size_t _size) {
 		Data* retValue;
 		retValue = (Data*)malloc(_size + sizeof(size_t));
+		if (retValue == NULL) throw;
 		retValue->size = _size;
 		memcpy(&retValue->data[0], from, _size);
 		return retValue;
@@ -44,7 +45,7 @@ public:
 	}
 };
 
-void foo() {
+/*void foo() {
 	int x = 5;
 	Data* data = Data::create(&x, sizeof(int));
 	char str[] = "Hi";
@@ -52,4 +53,4 @@ void foo() {
 	std::cout << data2.get<char> << std::endl;
 	data.destruct();
 	data2.destruct();
-}
+}*/

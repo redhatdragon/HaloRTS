@@ -4,8 +4,9 @@
 				[PUBLIC DOMAIN]
 
 				IO_API
+
 An api intended to help build applications in an os agnostic way.
-By forcing the application to only touch the below data and function
+By forcing the application to only touch the below function
 prototypes; the only thing one will need to port their code to a different
 platform will be a cooresponding IO_API_ header specific to their platorm.
 If one does not exist this helps make it easy to build such a file for
@@ -16,7 +17,7 @@ applications (optionally C++ of course).
 BUILD:  Compilation should be very straight forward and easy.  All you must
 do is include the right IO_API_ header in IO_API.c which contains your
 platform's specific needs.  Then compile as you would other projects.
-No dynamic or static libraries involved.
+No dynamic or static libraries involved.  Unless the implimentation requires it.
 
 This API is in ALPHA and will likely change over time to suit broader
 uses.  It was designed with game dev in mind but may change over time
@@ -27,19 +28,13 @@ Please feel free to contribute with merge requests or a new IO_API_
 implimentations at ____
 
 TODO:
--Debate about using an uint32_t or uint8_t array for the canvas data.
+-Decide about using an uint32_t or uint8_t array for the canvas data.
 Or have it modifiable.
--Debate on using uint16_t or uint32_t for cWidth and cHeight.
--Debate on using uint32_t* or void* for Texture::data.
--Debate on using uint8_t* or void* for Audio::data.
+-Decide on using uint16_t or uint32_t for cWidth and cHeight.
 -Should recvPacketUDP return a PacketUDP* through a parameter?
--Should there be other functionality such as drawing primitive shapes or
-storing/displaying fonts.
 -Should there be 3D support?
 -Should there be a way to get things like screen data?
 -Should there be a way to get/resize the window outside the canvas?
--Should we even expose the canvas buffer?  Or have it accessed through a
-function?
 
 *************************************************************************/
 
@@ -61,8 +56,8 @@ extern "C" {
 
 
 	//void drawTextureFromFile(const char* fileName, int x, int y);
-	//void drawTextureFromFileUnsafe(const char* fileName, int x, int y);
 	void drawTexture(const void* texture, int x, int y, int w, int h);
+	void recolorTexture(void* texture, uint8_t r, uint8_t g, uint8_t b);
 	void* getTexture(const char* fileName);
 	//void resizeTexture(void* texture, uint32_t width, uint32_t height);
 	void releaseTexture(void* texture);
@@ -86,6 +81,7 @@ extern "C" {
 	bool writeFileText(const char* fileName, char* str);
 	bool appendToFileData(const char* fileName, uint8_t* data);
 	bool appendToFileText(const char* fileName, char* str);
+	const char* getDirData();
 
 	float getFPS();
 	void setFPS(uint32_t fps);

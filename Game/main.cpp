@@ -5,6 +5,7 @@
 #include "Asset.h"
 #include <iostream>
 #include <time.h>
+#include <stdio.h>
 
 #include "systems/systems.h"
 
@@ -15,6 +16,8 @@ void foo(void*) {
 }
 
 void appStart() {
+	srand(time(NULL));
+
 	auto c = clock();
 
 	std::cout << "Pre initialization finished in " << c << " miliseconds." << std::endl;
@@ -31,7 +34,7 @@ void appStart() {
 	EntityID player = ecs.getNewEntity();
 	BodyID bodyID = physics.addBodyRect(128, 128, 16, 16);
 	physics.setUserData(bodyID, (void*)player);
-	TextureID koiTexID = TextureCodex::add("data/Textures/Koishi.png");
+	TextureID koiTexID = TextureCodex::add(std::string(getDirData())+"textures/Koishi.png");
 	ecs.emplace(player, bodyComponentID, &bodyID);
 	ecs.emplace(player, playerControllerComponentID, NULL);
 	ecs.emplace(player, textureComponentID, &koiTexID);

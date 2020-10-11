@@ -18,6 +18,7 @@ extern ComponentID damageOnCollisionComponentID;
 extern ComponentID healthComponentID;
 extern ComponentID deadComponentID;
 extern ComponentID suicideOnCollisionComponentID;
+extern ComponentID AIComponentID;
 
 void registerComponents();
 
