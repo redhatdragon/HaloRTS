@@ -11,9 +11,9 @@
 
 struct ThreadPool* threadPool;  //needs further debugging
 
-void foo(void*) {
+//void foo(void*) {
 
-}
+//}
 
 void appStart() {
 	srand(time(NULL));
