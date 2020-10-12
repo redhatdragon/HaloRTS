@@ -1,15 +1,15 @@
-#include <IO_API/IO_API.h>
-#include <DDECS.h>
-#include <PhysicsEngine.h>
-//#include "PhysicsEngineConvex.h"
-#include "Asset.h"
+#include <IO_API/IO_API.h>  //handles all io such as gfx, threading, networking and input.
+#include <DDECS.h>   //custom data driven ECS.
+#include <PhysicsEngine.h>  //custom AABB (40k moving bodies max)
+//#include "PhysicsEngineConvex.h"  //uses chipmunk2d as the back end (4k moving bodies max)
+#include "Asset.h"  //manages (loads and unloads) resources while sharing a single id per resource.
 #include <iostream>
 #include <time.h>
 #include <stdio.h>
 
-#include "systems/systems.h"
+#include "systems/systems.h"  //example "systems" used for ecs.
 
-struct ThreadPool* threadPool;
+struct ThreadPool* threadPool;  //needs further debugging
 
 void foo(void*) {
 
