@@ -59,8 +59,11 @@ extern "C" {
 	void drawTexture(const void* texture, int x, int y, int w, int h);
 	void recolorTexture(void* texture, uint8_t r, uint8_t g, uint8_t b);
 	void* getTexture(const char* fileName);
-	//void resizeTexture(void* texture, uint32_t width, uint32_t height);
+	void* getBlankTexture(int w, int h);
+	void resizeTexture(void* texture, int width, int height);
 	void releaseTexture(void* texture);
+	uint32_t getPixelRGBA(void* texture, int x, int y);
+	void setPixelRGBA(void* texture, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 	void drawBackground(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 	void drawText(const char* str, int x, int y, unsigned int fontWidth);
 	void drawRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b, uint8_t a);

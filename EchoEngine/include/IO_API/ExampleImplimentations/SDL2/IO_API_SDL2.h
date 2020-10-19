@@ -46,8 +46,17 @@ void* getTexture(const char* fileName) {
 	struct SDL_Surface* s = IMG_Load(fileName);
 	return SDL_CreateTextureFromSurface(renderer, s);
 }
+void* getBlankTexture(int w, int h) {
+
+}
+void resizeTexture(void* texture, int width, int height) {
+
+}
 void releaseTexture(void* texture) {
 	SDL_DestroyTexture(texture);
+}
+uint32_t getPixelRGBA(void* texture, int x, int y) {
+
 }
 void drawText(const char* str, int x, int y, unsigned int fontWidth) {
 	TTF_Font* font = TTF_OpenFont(DIR_TO_DATA "fonts/consola.ttf", fontWidth);
